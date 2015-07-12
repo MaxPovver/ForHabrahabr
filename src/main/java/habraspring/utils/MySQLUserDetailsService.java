@@ -29,24 +29,10 @@ public class MySQLUserDetailsService implements UserDetailsService {
             User client = users.findByUsername(username);
             loadedUser = new org.springframework.security.core.userdetails.User(
                     client.getUsername(), client.getPassword(),
-                    DummyAuthority.getAuth());
+                    client.getRoles());
         } catch (Exception repositoryProblem) {
             throw new InternalAuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);
         }
         return loadedUser;
-    }
-
-    static class DummyAuthority implements GrantedAuthority
-    {
-        static Collection<GrantedAuthority> getAuth()
-        {
-            List<GrantedAuthority> res = new ArrayList<>(1);
-            res.add(new DummyAuthority());
-            return res;
-        }
-        @Override
-        public String getAuthority() {
-            return "USER";
-        }
     }
 }
