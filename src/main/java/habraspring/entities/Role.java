@@ -1,5 +1,6 @@
 package habraspring.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Role implements GrantedAuthority {
     private long id;
     private String role;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     Set<User> users;
 
